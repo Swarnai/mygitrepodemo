@@ -1,8 +1,9 @@
 Command Listing
 git version
-git config --global user.name "Abe Lincoln"
+git config --global user.name "swarnai"
 
-git config --global user.email "mrabe@git.training"git config --global --list
+git config --global user.email "swarna_i@yahoo.com"
+git config --global --list
 
 Copy the Repository (clone)Command Listing# paste in your GitHub HTTPS clone URL
 git clone https://github.com/prezlincoln/github-demo.gitlscd github-demols
