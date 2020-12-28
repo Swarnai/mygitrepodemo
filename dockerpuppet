@@ -1,0 +1,30 @@
+With Docker installed, you can start running some simple tests, like pulling down the latest version of the Centos image:
+
+$ docker run -it centos:latest /bin/bash
+
+Let’s take it a step further by having Docker create a new container with Puppet inside, which can perform any instruction you would pass in a manifest. For example:
+
+$ docker run --name apply-test puppet/puppet-agent apply -e 'file { "/tmp/adhoc": content => "Written by Puppet" }'
+
+This will pull the puppet/puppet-agent image from Docker Hub and use Puppet to apply a change, namely creating a file in /tmp/adhoc containing the words, “Written by Puppet.”
+
+If you now run a diff on that container, you’ll see what’s changed from the original image. In this case, upon running, the container created new folders and added content to them, including the /tmp/adhoc file:
+
+
+Build a Puppet environment with a single command
+
+You can actually move well beyond launching a handful of containers, and run your Puppet infrastructure on top of a containers-as-a-service platform. This can be accomplished with the puppet/puppetserver image, which will deploy a fully functioning Puppet master:
+
+$ docker run --net puppet --name puppet --hostname puppet puppet/puppetserver
+
+
+
+
+Everything will be pulled, built and booted from a single command executed from the directory where you’ve saved your docker-compose.yml file:
+
+$ docker-compose up
+
+
+This takes a couple of minutes to pull down and install everything into a series of containers, but when it’s done you’ll have a whole environment, which gives you a way to get a very useful test environment in a few minutes. You can can see all the bits and pieces and see how it works in moments, instead of setting up a series of VMs.
+
+If you run a simple docker ps command, you’ll see all the running containers and their ports, including Puppet Explorer, which in my case was running at port 32772. By pointing a browser to the container host node IP address and that port — http://hostname:32772 — you should see the dashboard:
